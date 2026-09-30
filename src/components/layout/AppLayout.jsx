@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
+import { MobileNavigation } from './MobileNavigation';
 import { GlobalSearchModal } from './GlobalSearchModal';
 import { Drawer } from '../common/Drawer';
 import { EvidenceModal } from '../evidence/EvidenceModal';
 import { PersonModal } from '../people/PersonModal';
 import { TimelineEventModal } from '../timeline/TimelineEventModal';
 import { ReportDetailModal } from '../reports/ReportDetailModal';
+import { CaseBriefingModal } from '../game/CaseBriefingModal';
+import { SubmitInvestigationModal } from '../game/SubmitInvestigationModal';
+import { AIPartner } from '../ai/AIPartner';
 import { useCase } from '../../context/CaseContext';
 import { 
   Bell, 
@@ -28,6 +32,12 @@ export const AppLayout = () => {
   const { 
     isNotificationsOpen, 
     setIsNotificationsOpen, 
+    isBriefingOpen,
+    setIsBriefingOpen,
+    isSubmitModalOpen,
+    setIsSubmitModalOpen,
+    isAIPartnerOpen,
+    setIsAIPartnerOpen,
     activities, 
     activeCase,
     selectedEvidence,
@@ -64,34 +74,67 @@ export const AppLayout = () => {
 
   return (
     <div className="flex h-screen bg-dark-950 text-slate-100 overflow-hidden font-sans">
-      {/* Desktop Persistent Sidebar */}
-      <div className="hidden lg:block h-full">
+      {/* Desktop Persistent Sidebar Rail */}
+      <div className="hidden md:block h-full flex-shrink-0">
         <Sidebar />
       </div>
 
-      {/* Mobile Navigation Drawer */}
+      {/* Mobile Drawer for Navigation Rail */}
       <Drawer
         isOpen={mobileOpen}
         onClose={() => setMobileOpen(false)}
         position="left"
         width="max-w-xs"
-        title="Investigation Command"
-        subtitle="Navigation Menu"
+        title="Mystery Solver"
+        subtitle="Investigation Menu"
       >
         <Sidebar onCloseMobile={() => setMobileOpen(false)} />
       </Drawer>
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden bg-dark-950">
+      {/* Main Workspace Area */}
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden bg-dark-950 pb-16 md:pb-0">
         <Header onOpenMobileMenu={() => setMobileOpen(true)} />
 
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-5 lg:p-6 space-y-6">
           <Outlet />
         </main>
       </div>
 
+      {/* Mobile Bottom Navigation Rail */}
+      <MobileNavigation />
+
       {/* Global Search Modal */}
       <GlobalSearchModal />
+
+      {/* AI Partner Mobile/Tablet Slide-over Drawer */}
+      <Drawer
+        isOpen={isAIPartnerOpen}
+        onClose={() => setIsAIPartnerOpen(false)}
+        position="right"
+        width="max-w-md"
+        title="AI Investigation Partner"
+        subtitle="Forensic analysis & assistance"
+      >
+        <div className="h-[80vh]">
+          <AIPartner isMobileDrawer onCloseMobile={() => setIsAIPartnerOpen(false)} />
+        </div>
+      </Drawer>
+
+      {/* Case Briefing Modal */}
+      <CaseBriefingModal
+        isOpen={isBriefingOpen}
+        onClose={() => setIsBriefingOpen(false)}
+        onBegin={() => {
+          setIsBriefingOpen(false);
+          navigate('/investigation');
+        }}
+      />
+
+      {/* Submit Investigation Modal */}
+      <SubmitInvestigationModal
+        isOpen={isSubmitModalOpen}
+        onClose={() => setIsSubmitModalOpen(false)}
+      />
 
       {/* Notifications / Activity Drawer */}
       <Drawer
@@ -102,12 +145,12 @@ export const AppLayout = () => {
         width="max-w-md"
       >
         <div className="space-y-4">
-          <div className="p-3 bg-dark-850/80 border border-slate-800 rounded-xl flex items-center justify-between">
+          <div className="p-3 bg-dark-900 border border-slate-800 rounded-xl flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-xs font-mono text-slate-300">Live Agent Feed Active</span>
+              <span className="text-xs font-mono text-slate-300">Live Telemetry Active</span>
             </div>
-            <span className="text-[10px] font-mono text-slate-400">Synced to Case #001</span>
+            <span className="text-[10px] font-mono text-slate-400">{activeCase?.id}</span>
           </div>
 
           <div className="space-y-3">
@@ -116,7 +159,7 @@ export const AppLayout = () => {
               return (
                 <div
                   key={act.id}
-                  className="p-3.5 rounded-xl bg-dark-850/60 border border-slate-800/80 hover:border-slate-700 transition-colors"
+                  className="p-3.5 rounded-xl bg-dark-900/80 border border-slate-800/80 hover:border-slate-700 transition-colors"
                 >
                   <div className="flex items-start gap-3">
                     <div className="p-2 rounded-lg bg-dark-950 border border-slate-800 text-cyan-400">
@@ -151,7 +194,7 @@ export const AppLayout = () => {
                 navigate('/investigation');
               }}
             >
-              Open AI Investigation Console
+              Open Investigation Room
             </Button>
           </div>
         </div>
