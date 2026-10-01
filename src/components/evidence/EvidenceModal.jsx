@@ -13,16 +13,33 @@ import {
   FileText,
   Link2,
   Lock,
-  ArrowRight
+  ArrowRight,
+  Pin,
+  Sparkles,
+  Tag,
+  AlertCircle
 } from 'lucide-react';
 import { useCase } from '../../context/CaseContext';
 import { useNavigate } from 'react-router-dom';
 
 export const EvidenceModal = ({ evidence, isOpen, onClose }) => {
-  const { allPeople, allEvents, setSelectedPerson, setSelectedEvent, setActiveCaseId } = useCase();
+  const { 
+    allPeople, 
+    allEvents, 
+    setSelectedPerson, 
+    setSelectedEvent, 
+    pinnedClueIds,
+    togglePinClue,
+    clueStatuses,
+    setClueStatus,
+    addNote
+  } = useCase();
   const navigate = useNavigate();
 
   if (!evidence) return null;
+
+  const isPinned = pinnedClueIds.has(evidence.id);
+  const currentStatus = clueStatuses[evidence.id];
 
   const relatedPeopleObjects = allPeople.filter(p => evidence.relatedPeople?.includes(p.id));
   const relatedEventObjects = allEvents.filter(ev => evidence.relatedEvents?.includes(ev.id));
@@ -37,6 +54,11 @@ export const EvidenceModal = ({ evidence, isOpen, onClose }) => {
     setSelectedEvent(event);
   };
 
+  const handleQuickNote = () => {
+    const defaultNote = `Observation regarding ${evidence.code || evidence.id} (${evidence.title}): `;
+    addNote(defaultNote, evidence.id);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -47,7 +69,7 @@ export const EvidenceModal = ({ evidence, isOpen, onClose }) => {
     >
       <div className="space-y-6">
         {/* Top Badges & Meta info */}
-        <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-dark-950/80 border border-slate-800 rounded-xl">
+        <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-dark-950/90 border border-slate-800 rounded-xl">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="cyan" size="sm">
               {evidence.type || 'Document'}
@@ -56,42 +78,108 @@ export const EvidenceModal = ({ evidence, isOpen, onClose }) => {
               {evidence.category}
             </Badge>
             <Badge variant="success" size="sm" dot>
-              {evidence.status || 'Verified'}
+              {evidence.status || 'Verified Authentic'}
             </Badge>
-            {evidence.confidentiality && (
-              <span className="text-xs font-mono text-slate-400 flex items-center gap-1">
-                <Lock className="w-3 h-3 text-slate-500" />
-                {evidence.confidentiality}
-              </span>
-            )}
           </div>
 
           <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
             <span className="flex items-center gap-1">
-              <Calendar className="w-3.5 h-3.5 text-slate-500" />
-              Recorded: {evidence.date}
+              <Calendar className="w-3.5 h-3.5 text-slate-400" />
+              Date: {evidence.date}
             </span>
+          </div>
+        </div>
+
+        {/* Extracted Information Quick Bar (Detective Clue Discovery) */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div className="p-3 rounded-xl bg-dark-900/80 border border-slate-800 text-center">
+            <div className="text-base font-mono font-bold text-purple-400">
+              {relatedPeopleObjects.length || (evidence.relatedPeople ? evidence.relatedPeople.length : 2)}
+            </div>
+            <div className="text-[10px] font-mono text-slate-400 uppercase mt-0.5">
+              People Mentioned
+            </div>
+          </div>
+
+          <div className="p-3 rounded-xl bg-dark-900/80 border border-slate-800 text-center">
+            <div className="text-base font-mono font-bold text-amber-400">
+              {relatedEventObjects.length || (evidence.relatedEvents ? evidence.relatedEvents.length : 2)}
+            </div>
+            <div className="text-[10px] font-mono text-slate-400 uppercase mt-0.5">
+              Timeline Links
+            </div>
+          </div>
+
+          <div className="p-3 rounded-xl bg-dark-900/80 border border-slate-800 text-center">
+            <div className="text-base font-mono font-bold text-cyan-400">
+              {evidence.metadata?.pages || 4}
+            </div>
+            <div className="text-[10px] font-mono text-slate-400 uppercase mt-0.5">
+              Archival Pages
+            </div>
+          </div>
+
+          <div className="p-3 rounded-xl bg-dark-900/80 border border-slate-800 text-center">
+            <div className="text-base font-mono font-bold text-emerald-400">
+              {evidence.chainOfCustody?.length || 3}
+            </div>
+            <div className="text-[10px] font-mono text-slate-400 uppercase mt-0.5">
+              Custody Transfers
+            </div>
+          </div>
+        </div>
+
+        {/* Investigator Tagging Controls */}
+        <div className="p-4 rounded-xl bg-dark-950/70 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2 text-xs font-mono text-slate-300">
+            <Tag className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Mark Clue Status:</span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            {[
+              { id: 'important', label: 'Important', color: 'border-crimson-700 bg-crimson-950/60 text-crimson-300' },
+              { id: 'interesting', label: 'Interesting', color: 'border-amber-700 bg-amber-950/60 text-amber-300' },
+              { id: 'unverified', label: 'Unverified', color: 'border-slate-700 bg-slate-900 text-slate-300' },
+              { id: 'contradiction', label: 'Contradiction', color: 'border-purple-600 bg-purple-950/60 text-purple-300' }
+            ].map(tag => {
+              const isSelected = currentStatus === tag.id;
+              return (
+                <button
+                  key={tag.id}
+                  type="button"
+                  onClick={() => setClueStatus(evidence.id, tag.id)}
+                  className={`px-3 py-1 rounded-lg text-xs font-mono font-bold border transition-all ${
+                    isSelected
+                      ? `${tag.color} shadow-sm scale-105 ring-1 ring-white/20`
+                      : 'bg-dark-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+                  }`}
+                >
+                  {isSelected ? `✓ ${tag.label}` : tag.label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Description & Summary Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 bg-dark-850/60 border border-slate-800/80 rounded-xl">
+          <div className="p-4 bg-dark-900/70 border border-slate-800 rounded-xl">
             <h4 className="text-xs font-mono font-semibold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
               <FileText className="w-3.5 h-3.5 text-cyan-400" />
               Official Archival Transcript
             </h4>
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="text-xs text-slate-300 leading-relaxed font-sans">
               {evidence.description}
             </p>
           </div>
 
-          <div className="p-4 bg-dark-850/60 border border-slate-800/80 rounded-xl">
+          <div className="p-4 bg-dark-900/70 border border-slate-800 rounded-xl">
             <h4 className="text-xs font-mono font-semibold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
               Forensic Synthesis
             </h4>
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="text-xs text-slate-300 leading-relaxed font-sans">
               {evidence.summary || evidence.description}
             </p>
           </div>
@@ -99,13 +187,13 @@ export const EvidenceModal = ({ evidence, isOpen, onClose }) => {
 
         {/* Key Findings */}
         {evidence.keyFindings && evidence.keyFindings.length > 0 && (
-          <div className="p-4 bg-dark-850/40 border border-slate-800 rounded-xl">
+          <div className="p-4 bg-dark-900/50 border border-slate-800 rounded-xl">
             <h4 className="text-xs font-mono font-semibold text-slate-300 uppercase tracking-wider mb-3">
-              Key Investigative Findings
+              Key Evidentiary Findings
             </h4>
             <ul className="space-y-2">
               {evidence.keyFindings.map((finding, idx) => (
-                <li key={idx} className="flex items-start gap-2 text-xs text-slate-300">
+                <li key={idx} className="flex items-start gap-2 text-xs text-slate-300 font-sans">
                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-1.5 flex-shrink-0" />
                   <span>{finding}</span>
                 </li>
@@ -116,14 +204,14 @@ export const EvidenceModal = ({ evidence, isOpen, onClose }) => {
 
         {/* Contradictions & Irregularities (if flagged) */}
         {evidence.contradictions && evidence.contradictions.length > 0 && (
-          <div className="p-4 bg-amber-950/20 border border-amber-800/40 rounded-xl">
-            <h4 className="text-xs font-mono font-semibold text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <AlertTriangle className="w-4 h-4 text-amber-400" />
+          <div className="p-4 bg-purple-950/30 border border-purple-800/40 rounded-xl">
+            <h4 className="text-xs font-mono font-semibold text-purple-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <AlertTriangle className="w-4 h-4 text-purple-400" />
               Identified Temporal or Evidentiary Discrepancies
             </h4>
             <ul className="space-y-1.5">
               {evidence.contradictions.map((contra, idx) => (
-                <li key={idx} className="text-xs text-amber-200/90 leading-relaxed">
+                <li key={idx} className="text-xs text-purple-200/90 leading-relaxed font-sans">
                   • {contra}
                 </li>
               ))}
@@ -165,13 +253,13 @@ export const EvidenceModal = ({ evidence, isOpen, onClose }) => {
                   <button
                     key={p.id}
                     onClick={() => handlePersonClick(p)}
-                    className="w-full flex items-center justify-between p-2.5 rounded-lg bg-dark-850 hover:bg-dark-800 border border-slate-800 text-left transition-colors group"
+                    className="w-full flex items-center justify-between p-2.5 rounded-lg bg-dark-900 hover:bg-dark-850 border border-slate-800 text-left transition-colors group"
                   >
                     <div>
                       <p className="text-xs font-semibold text-slate-200 group-hover:text-white">{p.name}</p>
                       <p className="text-[10px] font-mono text-slate-400">{p.role}</p>
                     </div>
-                    <ArrowRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400 transition-colors" />
+                    <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-cyan-400 transition-colors" />
                   </button>
                 ))
               )}
@@ -192,13 +280,13 @@ export const EvidenceModal = ({ evidence, isOpen, onClose }) => {
                   <button
                     key={ev.id}
                     onClick={() => handleEventClick(ev)}
-                    className="w-full flex items-center justify-between p-2.5 rounded-lg bg-dark-850 hover:bg-dark-800 border border-slate-800 text-left transition-colors group"
+                    className="w-full flex items-center justify-between p-2.5 rounded-lg bg-dark-900 hover:bg-dark-850 border border-slate-800 text-left transition-colors group"
                   >
                     <div className="truncate mr-2">
                       <p className="text-xs font-semibold text-slate-200 group-hover:text-white truncate">{ev.title}</p>
                       <p className="text-[10px] font-mono text-amber-400">{ev.date} {ev.time ? `• ${ev.time}` : ''}</p>
                     </div>
-                    <ArrowRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400 flex-shrink-0 transition-colors" />
+                    <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-cyan-400 flex-shrink-0 transition-colors" />
                   </button>
                 ))
               )}
@@ -207,22 +295,43 @@ export const EvidenceModal = ({ evidence, isOpen, onClose }) => {
         </div>
 
         {/* Footer Actions */}
-        <div className="flex items-center justify-between pt-4 border-t border-slate-800">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              onClose();
-              navigate(`/connections`);
-            }}
-            icon={Link2}
-          >
-            Explore in Connections Graph
-          </Button>
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-800">
+          <div className="flex items-center gap-2">
+            <Button
+              variant={isPinned ? "secondary" : "primary"}
+              size="sm"
+              icon={Pin}
+              onClick={() => togglePinClue(evidence.id)}
+            >
+              {isPinned ? "Unpin from Board" : "Add to Investigation Board"}
+            </Button>
 
-          <Button variant="secondary" size="sm" onClick={onClose}>
-            Close Inspection
-          </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleQuickNote}
+            >
+              + Note
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                onClose();
+                navigate(`/connections`);
+              }}
+              icon={Link2}
+            >
+              Graph View
+            </Button>
+
+            <Button variant="secondary" size="sm" onClick={onClose}>
+              Close
+            </Button>
+          </div>
         </div>
       </div>
     </Modal>

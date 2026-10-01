@@ -4,7 +4,6 @@ import { CaseProvider } from './context/CaseContext';
 import { AppLayout } from './components/layout/AppLayout';
 
 import { Landing } from './pages/Landing';
-import { Dashboard } from './pages/Dashboard';
 import { Cases } from './pages/Cases';
 import { CaseDetails } from './pages/CaseDetails';
 import { SolveCasePage } from './pages/SolveCasePage';
@@ -25,7 +24,8 @@ export function App() {
 
           {/* Main App Workspace inside AppLayout */}
           <Route element={<AppLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/investigation" element={<Investigation />} />
+            <Route path="/dashboard" element={<Navigate to="/investigation" replace />} />
             <Route path="/cases" element={<Cases />} />
             <Route path="/cases/:caseId" element={<CaseDetails />} />
             <Route path="/cases/:caseId/solve" element={<SolveCasePage />} />
@@ -33,11 +33,10 @@ export function App() {
             <Route path="/timeline" element={<TimelinePage />} />
             <Route path="/people" element={<People />} />
             <Route path="/connections" element={<Connections />} />
-            <Route path="/investigation" element={<Investigation />} />
             <Route path="/reports" element={<Reports />} />
             
             {/* Fallback */}
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/investigation" replace />} />
           </Route>
         </Routes>
       </BrowserRouter>
