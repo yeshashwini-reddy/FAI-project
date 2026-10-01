@@ -195,7 +195,7 @@ export const mockPeople = [
     category: "Person of Interest",
     role: "Lead Optical Hardware Architect",
     avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
-    status: "Employee / Credential Compromised",
+    status: "Employee / Primary Suspect",
     summary: "Senior photonics researcher with top-level security clearance. Primary holder of cryptographic token used during 03:14 AM breach.",
     knownInformation: "Cellular data confirms phone was active 14km away at residence during badge swipe. Digital twin cloned token suspected.",
     evidenceLinked: 4,
@@ -203,6 +203,34 @@ export const mockPeople = [
     relationships: [],
     relatedEvidenceIds: ["E-101", "E-102"],
     relatedEventIds: ["EV-201", "EV-202"]
+  },
+  {
+    id: "P-202",
+    caseId: "CASE-002",
+    name: "Marcus Vance",
+    category: "Person of Interest",
+    role: "Security Systems Administrator",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+    status: "Systems Engineer",
+    summary: "Managed cleanroom access control servers. Possessed root administrative privileges required to override thermal sensor alert triggers.",
+    knownInformation: "Logged into the security console 20 minutes prior to thermal sensor shutdown.",
+    evidenceLinked: 3,
+    eventsLinked: 2,
+    relationships: []
+  },
+  {
+    id: "P-203",
+    caseId: "CASE-002",
+    name: "Maya Lin",
+    category: "Person of Interest",
+    role: "Cleanroom Operations Supervisor",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
+    status: "Operations Staff",
+    summary: "Supervised midnight cleanroom shifts and held physical access keys to optics testing benches.",
+    knownInformation: "Conducted routine bench inspection right before the physical chip disconnection.",
+    evidenceLinked: 2,
+    eventsLinked: 2,
+    relationships: []
   },
 
   // CASE-003 People
@@ -221,5 +249,121 @@ export const mockPeople = [
     relationships: [],
     relatedEvidenceIds: ["E-201"],
     relatedEventIds: ["EV-301"]
+  },
+  {
+    id: "P-302",
+    caseId: "CASE-003",
+    name: "Guillaume Apollinaire",
+    category: "Person of Interest",
+    role: "Avant-garde Poet & Art Collector",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+    status: "Historical Associate",
+    summary: "Prominent Parisian literary figure linked to radical art collectors who had previously acquired statuettes taken from the museum.",
+    knownInformation: "Arrested briefly during investigation due to possession of stolen museum artifacts.",
+    evidenceLinked: 2,
+    eventsLinked: 1,
+    relationships: []
+  },
+  {
+    id: "P-303",
+    caseId: "CASE-003",
+    name: "Honoré Joseph Géry",
+    category: "Person of Interest",
+    role: "Louvre Night Guard",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80",
+    status: "Museum Guard",
+    summary: "On duty in the Salon Carré during the overnight shift on August 20-21, 1911.",
+    knownInformation: "Claimed he saw no unauthorized visitors during his 04:00 AM patrol sweep.",
+    evidenceLinked: 1,
+    eventsLinked: 1,
+    relationships: []
+  },
+
+  // CASE-004 People
+  {
+    id: "P-401",
+    caseId: "CASE-004",
+    name: "Arthur Blackwood (Estate Trustee)",
+    category: "Person of Interest",
+    role: "Managing Estate Trustee & Financial Manager",
+    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80",
+    status: "Primary Suspect",
+    summary: "Uncle and legal trustee of Eleanor Blackwood. Controlled estate banking accounts prior to independent audit.",
+    knownInformation: "Forged wire transfer authorizations post-dated after Eleanor's transport car was abandoned.",
+    evidenceLinked: 3,
+    eventsLinked: 2,
+    relationships: []
+  },
+  {
+    id: "P-402",
+    caseId: "CASE-004",
+    name: "Inspector James Sterling",
+    category: "Investigator",
+    role: "Yorkshire Constabulary Detective",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+    status: "Lead Detective (1974)",
+    summary: "Lead local officer who inspected the abandoned vehicle along the Leeds road.",
+    knownInformation: "Noted lack of struggle marks inside the abandoned vehicle.",
+    evidenceLinked: 2,
+    eventsLinked: 1,
+    relationships: []
+  },
+  {
+    id: "P-403",
+    caseId: "CASE-004",
+    name: "Margaret Sterling",
+    category: "Person of Interest",
+    role: "Personal Assistant to Eleanor Blackwood",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
+    status: "Estate Staff",
+    summary: "Managed Eleanor's daily appointment diary and correspondence.",
+    knownInformation: "Confirmed Eleanor intended to present financial audit documents to legal counsel in Leeds.",
+    evidenceLinked: 2,
+    eventsLinked: 1,
+    relationships: []
+  },
+
+  // CASE-005 People
+  {
+    id: "P-501",
+    caseId: "CASE-005",
+    name: "Lars Lindqvist (Logistics Operator)",
+    category: "Person of Interest",
+    role: "Senior Freight Logistics Manager",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+    status: "Primary Suspect",
+    summary: "Operated maritime cargo dispatch software across European ports.",
+    knownInformation: "Manipulated AIS satellite transponder signals to fake vessel locations while diverting physical cargo.",
+    evidenceLinked: 4,
+    eventsLinked: 3,
+    relationships: []
+  },
+  {
+    id: "P-502",
+    caseId: "CASE-005",
+    name: "Astrid Nygård",
+    category: "Official",
+    role: "Customs Inspection Officer",
+    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
+    status: "Customs Agent",
+    summary: "Responsible for signing off physical bills of lading in Rotterdam terminal.",
+    knownInformation: "Stamped paperwork for cargo vessels that had not physically docked.",
+    evidenceLinked: 2,
+    eventsLinked: 1,
+    relationships: []
+  },
+  {
+    id: "P-503",
+    caseId: "CASE-005",
+    name: "Erik Thorvaldsen",
+    category: "Person of Interest",
+    role: "Cargo Vessel Captain",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80",
+    status: "Ship Master",
+    summary: "Commanded tanker vessels navigating Northern European shipping channels.",
+    knownInformation: "Reported radio interference and GPS signal loss during scheduled port calls.",
+    evidenceLinked: 2,
+    eventsLinked: 2,
+    relationships: []
   }
 ];

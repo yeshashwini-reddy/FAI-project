@@ -8,6 +8,7 @@ import { EvidenceModal } from '../evidence/EvidenceModal';
 import { PersonModal } from '../people/PersonModal';
 import { TimelineEventModal } from '../timeline/TimelineEventModal';
 import { ReportDetailModal } from '../reports/ReportDetailModal';
+import { SolveCaseModal } from '../case/SolveCaseModal';
 import { useCase } from '../../context/CaseContext';
 import { 
   Bell, 
@@ -30,6 +31,8 @@ export const AppLayout = () => {
     setIsNotificationsOpen, 
     activities, 
     activeCase,
+    activePeople,
+    activeEvidence,
     selectedEvidence,
     setSelectedEvidence,
     selectedPerson,
@@ -37,7 +40,11 @@ export const AppLayout = () => {
     selectedEvent,
     setSelectedEvent,
     selectedReport,
-    setSelectedReport
+    setSelectedReport,
+    isSolveModalOpen,
+    setIsSolveModalOpen,
+    userSubmissions,
+    submitCaseSolution
   } = useCase();
 
   const location = useLocation();
@@ -151,7 +158,7 @@ export const AppLayout = () => {
                 navigate('/investigation');
               }}
             >
-              Open AI Investigation Console
+              Open AI Investigation Assistant
             </Button>
           </div>
         </div>
@@ -180,6 +187,16 @@ export const AppLayout = () => {
         report={selectedReport}
         isOpen={!!selectedReport}
         onClose={() => setSelectedReport(null)}
+      />
+
+      <SolveCaseModal
+        isOpen={isSolveModalOpen}
+        onClose={() => setIsSolveModalOpen(false)}
+        activeCase={activeCase}
+        activePeople={activePeople}
+        activeEvidence={activeEvidence}
+        onSubmitSolution={submitCaseSolution}
+        existingSubmission={userSubmissions[activeCase?.id]}
       />
     </div>
   );

@@ -8,7 +8,7 @@ export const mockCases = [
     status: "Investigation Active",
     progress: 68,
     priority: "High",
-    leadInvestigator: "Inspector Abberline / AI Matrix",
+    leadInvestigator: "Human Detective / AI Assistant",
     location: "London, England",
     description: "Re-examination of the 1888 London Metropolitan Police archives and witness testimony to map geographic clusters, timeline contradictions, and document chains of custody across 5 related historical occurrences.",
     summary: "In the late autumn of 1888, a series of unsolved crimes occurred in the East End of London. This investigation repository aggregates digitized archival transcripts from Scotland Yard, coroner reports from Wynne Baxter, and contemporary witness statements to test timeline consistency and verify document authenticity without drawing speculative conclusions.",
@@ -21,7 +21,28 @@ export const mockCases = [
     coverImage: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
     tags: ["Archival", "Victorian Era", "Timeline Conflict", "Coroner Inquest"],
     dateCreated: "2026-08-14",
-    lastUpdated: "Today, 10:42 AM"
+    lastUpdated: "Today, 10:42 AM",
+    officialCulpritId: "P-003",
+    officialCulpritName: "Thomas J. Bulling (Journalist)",
+    officialSolution: {
+      culpritName: "Thomas J. Bulling (Journalist)",
+      summary: "Journalist Thomas J. Bulling fabricated the famous 'Dear Boss' letters sent to the Central News Agency to sensationalize press coverage and boost newspaper sales.",
+      keyEvidence: ["E-002: 'Dear Boss' Letter", "E-008: 'From Hell' Package Records", "Special Branch Littlechild Memo"],
+      keyContradiction: "The timeline of letter arrival preceded public crime detail dissemination, proving internal press fabrication rather than perpetrator correspondence.",
+      fullExplanation: "Contemporary CID memorandums authored by Special Branch Chief John Littlechild in 1913 explicitly identified Central News Agency reporter Thomas J. Bulling as the author who concocted the letters to stimulate newspaper circulation. The physical ink analysis and internal timing demonstrate that the correspondent possessed press wire access rather than intimate crime scene access."
+    },
+    methodOptions: [
+      "Fabricated anonymous press letters ('Dear Boss') to generate sensational news coverage",
+      "Forged coroner inquest transcripts to misstate the time of death",
+      "Bribed night constables to bypass patrol sweeps in Mitre Square",
+      "Used a duplicate key to lock the Wentworth Dwellings entryway"
+    ],
+    correctMethod: "Fabricated anonymous press letters ('Dear Boss') to generate sensational news coverage",
+    hints: [
+      { level: 1, title: "Level 1 — Small Hint", text: "Examine the correspondence evidence items (like E-002) and compare their delivery times with police report dispatches." },
+      { level: 2, title: "Level 2 — Stronger Hint", text: "Look closely at Special Branch Chief John Littlechild's confidential memos regarding the Central News Agency reporter." },
+      { level: 3, title: "Level 3 — Very Strong Hint", text: "The suspect is a news reporter (Thomas J. Bulling) who concocted letters to stimulate newspaper sales." }
+    ]
   },
   {
     id: "CASE-002",
@@ -32,7 +53,7 @@ export const mockCases = [
     status: "Investigation Active",
     progress: 42,
     priority: "Critical",
-    leadInvestigator: "Agent V. Vance",
+    leadInvestigator: "Human Detective / AI Assistant",
     location: "Zurich & San Francisco",
     description: "Investigation into the illicit exfiltration of quantum cryptographic optical chips from a secure laboratory facility, involving RF access logs and encrypted channel metadata.",
     summary: "On November 14, 2025, an advanced optical processing unit vanished from a tier-4 cleanroom facility in Zurich. Access control logs show synchronized credential duplication and a 7-minute thermal sensor blackout.",
@@ -45,7 +66,28 @@ export const mockCases = [
     coverImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
     tags: ["Hardware Espionage", "Access Logs", "Forensic Imaging", "Encrypted Comms"],
     dateCreated: "2026-09-02",
-    lastUpdated: "Yesterday, 3:15 PM"
+    lastUpdated: "Yesterday, 3:15 PM",
+    officialCulpritId: "P-201",
+    officialCulpritName: "Dr. Karen Chen",
+    officialSolution: {
+      culpritName: "Dr. Karen Chen",
+      summary: "Dr. Karen Chen used cloned NFC credentials and an automated thermal sensor override to exfiltrate the optical processing unit.",
+      keyEvidence: ["E-101: RFID & Biometric Log", "E-102: Thermal Sensor Calibration Discrepancy"],
+      keyContradiction: "Cellular location logs place Dr. Chen at home, but biometrics show physical credential handshakes matching her cloned token at the exact minute of extraction.",
+      fullExplanation: "Dr. Chen configured an automated badge proxy relay and programmed a 7-minute cooling system thermal dip to mask physical chip removal while generating a remote location alibi."
+    },
+    methodOptions: [
+      "Cloned NFC badge credentials and triggered a 7-minute thermal sensor dip",
+      "Bypassed optical bench security using a master physical override key",
+      "Exfiltrated the chip through the cleanroom ventilation system",
+      "Hacked cleanroom biometrics remotely from an offsite server"
+    ],
+    correctMethod: "Cloned NFC badge credentials and triggered a 7-minute thermal sensor dip",
+    hints: [
+      { level: 1, title: "Level 1 — Small Hint", text: "Compare the cleanroom access timestamp with the thermal sensor log outage." },
+      { level: 2, title: "Level 2 — Stronger Hint", text: "Look for credential duplication signals in the NFC proxy telemetry." },
+      { level: 3, title: "Level 3 — Very Strong Hint", text: "The culprit used cloned credentials associated with Dr. Karen Chen's primary token." }
+    ]
   },
   {
     id: "CASE-003",
@@ -56,7 +98,7 @@ export const mockCases = [
     status: "Review Pending",
     progress: 85,
     priority: "Medium",
-    leadInvestigator: "Archivist M. Fontaine",
+    leadInvestigator: "Human Detective / AI Assistant",
     location: "Paris, France",
     description: "Analysis of the famous 1911 disappearance of masterworks from the Salon Carré, examining guard shift rotations, carpentry records, and border railway logs.",
     summary: "A comprehensive reconstruction of the 28-hour window during which a prized Renaissance portrait was removed from its frame inside the state gallery, analyzing structural egress routes and witness statements.",
@@ -69,7 +111,28 @@ export const mockCases = [
     coverImage: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80",
     tags: ["Art Recovery", "Historical Archives", "Transit Logs", "Structural Egress"],
     dateCreated: "2026-07-20",
-    lastUpdated: "Sep 28, 2026"
+    lastUpdated: "Sep 28, 2026",
+    officialCulpritId: "P-301",
+    officialCulpritName: "Vincenzo Peruggia",
+    officialSolution: {
+      culpritName: "Vincenzo Peruggia",
+      summary: "Louvre glazing contractor Vincenzo Peruggia hid inside a broom closet overnight and walked out with the painting wrapped under his coat.",
+      keyEvidence: ["E-201: Structural Egress Door Lock Analysis", "Carpentry & Glazing Shift Rosters"],
+      keyContradiction: "The door handle was removed from the inside of the stairwell, indicating an insider contractor with hardware access.",
+      fullExplanation: "Peruggia knew the gallery schedule intimately through his work fitting protective glass. He hid in a broom closet on Sunday night and unhooked the canvas during a guard shift change at 07:30 AM."
+    },
+    methodOptions: [
+      "Concealed inside a broom closet overnight and walked out during a guard shift rotation",
+      "Forged a curator exit permit to carry the frame through the main doors",
+      "Cut the canvas and lowered it via a rope into the inner courtyard",
+      "Substituted a forged copy of the portrait during public viewing hours"
+    ],
+    correctMethod: "Concealed inside a broom closet overnight and walked out during a guard shift rotation",
+    hints: [
+      { level: 1, title: "Level 1 — Small Hint", text: "Check which individuals had physical access to the protective glass mountings." },
+      { level: 2, title: "Level 2 — Stronger Hint", text: "Focus on the timing of the Monday morning guard shift rotation." },
+      { level: 3, title: "Level 3 — Very Strong Hint", text: "The culprit is glazing contractor Vincenzo Peruggia who hid overnight inside the building." }
+    ]
   },
   {
     id: "CASE-004",
@@ -80,7 +143,7 @@ export const mockCases = [
     status: "Investigation Active",
     progress: 35,
     priority: "High",
-    leadInvestigator: "Detective R. Hayes",
+    leadInvestigator: "Human Detective / AI Assistant",
     location: "Yorkshire Moors, UK",
     description: "Re-examination of missing heiress Eleanor Blackwood's final known movements, estate financial ledger anomalies, and maritime transport manifests from Hull docks.",
     summary: "In October 1974, Eleanor Blackwood failed to arrive at her legal counsel's office in Leeds. Recent estate renovation uncovered sealed correspondence and contradictory bank transfer authorizations.",
@@ -93,7 +156,28 @@ export const mockCases = [
     coverImage: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80",
     tags: ["Cold Case", "Financial Audit", "Estate Ledger", "Unsolved 1970s"],
     dateCreated: "2026-09-10",
-    lastUpdated: "Sep 25, 2026"
+    lastUpdated: "Sep 25, 2026",
+    officialCulpritId: "P-401",
+    officialCulpritName: "Arthur Blackwood (Estate Trustee)",
+    officialSolution: {
+      culpritName: "Arthur Blackwood (Estate Trustee)",
+      summary: "Trustee Arthur Blackwood forged wire transfers and intercepted Eleanor before her meeting with independent counsel.",
+      keyEvidence: ["Estate Financial Ledger", "Hull Dock Passenger Manifest"],
+      keyContradiction: "The bank transfer authorization signature was dated two hours after Eleanor's car was found abandoned.",
+      fullExplanation: "Arthur Blackwood altered estate ledger transfers to conceal insolvency before Eleanor could audit the accounts."
+    },
+    methodOptions: [
+      "Forged bank transfer authorizations to conceal estate financial insolvency",
+      "Intercepted the transport vehicle along the Leeds highway",
+      "Falsified maritime passenger manifests at the Hull shipping docks",
+      "Bribed independent legal counsel to delay the estate audit"
+    ],
+    correctMethod: "Forged bank transfer authorizations to conceal estate financial insolvency",
+    hints: [
+      { level: 1, title: "Level 1 — Small Hint", text: "Examine the financial ledger timestamps against the vehicle abandonment time." },
+      { level: 2, title: "Level 2 — Stronger Hint", text: "Look closely at who stood to lose power from independent legal counsel auditing the estate." },
+      { level: 3, title: "Level 3 — Very Strong Hint", text: "The culprit is Arthur Blackwood, who falsified financial records to hide estate insolvency." }
+    ]
   },
   {
     id: "CASE-005",
@@ -104,7 +188,7 @@ export const mockCases = [
     status: "Archived Analysis",
     progress: 94,
     priority: "Low",
-    leadInvestigator: "Special Agent S. Lind",
+    leadInvestigator: "Human Detective / AI Assistant",
     location: "Rotterdam & Oslo",
     description: "Multi-jurisdiction bill of lading falsification scheme involving automated vessel tracking spoofing and phantom petroleum shipments.",
     summary: "Investigation into ghost tanker manifests across Northern European ports. Automated AIS satellite trajectory discrepancies corroborated falsified customs clearance certifications.",
@@ -117,6 +201,21 @@ export const mockCases = [
     coverImage: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80",
     tags: ["AIS Spoofing", "Customs Ledger", "Maritime Law", "Shell Corporations"],
     dateCreated: "2026-06-11",
-    lastUpdated: "Sep 12, 2026"
-  }
+    lastUpdated: "Sep 12, 2026",
+    officialCulpritId: "P-501",
+    officialCulpritName: "Lars Lindqvist (Logistics Operator)",
+    officialSolution: {
+      culpritName: "Lars Lindqvist (Logistics Operator)",
+      summary: "Logistics Manager Lars Lindqvist operated AIS transponder spoofing software to fake vessel positioning while diverting cargo.",
+      keyEvidence: ["AIS Satellite Trajectory Logs", "Falsified Customs Clearance Certificates"],
+      keyContradiction: "Satellite imagery confirmed the tanker was anchored off Gothenburg when transponder data claimed it was unloading in Rotterdam.",
+      fullExplanation: "Lars Lindqvist orchestrated phantom cargo manifests to claim insurance payouts on non-existent oil shipments."
+    },
+    methodOptions: [
+      "Spoofed AIS transponder GPS coordinates while diverting petroleum cargo",
+      "Falsified physical customs clearance stamps at Rotterdam port",
+      "Created phantom shell corporation bank accounts in Gothenburg",
+      "Bribed Swedish maritime satellite inspection agents"
+    ],
+    correctMethod: "Spoofed AIS transponder GPS coordinates while diverting petroleum cargo",
 ];

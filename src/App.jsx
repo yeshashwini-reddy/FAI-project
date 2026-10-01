@@ -7,6 +7,7 @@ import { Landing } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
 import { Cases } from './pages/Cases';
 import { CaseDetails } from './pages/CaseDetails';
+import { SolveCasePage } from './pages/SolveCasePage';
 import { Evidence } from './pages/Evidence';
 import { TimelinePage } from './pages/TimelinePage';
 import { People } from './pages/People';
@@ -27,6 +28,7 @@ export function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/cases" element={<Cases />} />
             <Route path="/cases/:caseId" element={<CaseDetails />} />
+            <Route path="/cases/:caseId/solve" element={<SolveCasePage />} />
             <Route path="/evidence" element={<Evidence />} />
             <Route path="/timeline" element={<TimelinePage />} />
             <Route path="/people" element={<People />} />

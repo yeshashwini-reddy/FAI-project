@@ -18,6 +18,88 @@ export const CaseProvider = ({ children }) => {
   const [selectedPerson, setSelectedPerson] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedReport, setSelectedReport] = useState(null);
+  const [isSolveModalOpen, setIsSolveModalOpen] = useState(false);
+
+  // Progressive Hint System State
+  const [hintsUsedMap, setHintsUsedMap] = useState({});
+
+  const incrementHint = (caseId) => {
+    setHintsUsedMap(prev => ({
+      ...prev,
+      [caseId]: Math.min((prev[caseId] || 0) + 1, 3)
+    }));
+  };
+
+  // Case Submissions & User Solution Verification
+  const [userSubmissions, setUserSubmissions] = useState({});
+  const [reportsList, setReportsList] = useState(mockReports);
+
+  const submitCaseSolution = ({ caseId, suspectId, suspectName, theoryText, evidenceReasoning }) => {
+    const targetCase = cases.find(c => c.id === caseId) || activeCase;
+    const officialCulpritId = targetCase.officialCulpritId;
+    const officialCulpritName = targetCase.officialCulpritName;
+    const officialSolution = targetCase.officialSolution;
+
+    const isCorrect = 
+      (officialCulpritId && suspectId === officialCulpritId) ||
+      (officialCulpritName && suspectName.toLowerCase().includes(officialCulpritName.toLowerCase())) ||
+      (officialCulpritName && officialCulpritName.toLowerCase().includes(suspectName.toLowerCase()));
+
+    const result = {
+      caseId,
+      userSuspect: suspectName,
+      officialCulprit: officialCulpritName || 'Official Case Finding',
+      isCorrect,
+      theoryText,
+      evidenceReasoning,
+      officialSolution,
+      submittedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+
+    setUserSubmissions(prev => ({
+      ...prev,
+      [caseId]: result
+    }));
+
+    // Generate a detective report into reports list
+    const newReport = {
+      id: `REP-DET-${Date.now()}`,
+      caseId: targetCase.id,
+      caseTitle: targetCase.title,
+      reportNumber: `DET-SOLVE-${targetCase.id}`,
+      title: `Detective Solution Report: ${targetCase.title}`,
+      generatedDate: new Date().toISOString().split('T')[0],
+      status: isCorrect ? 'Case Solved' : 'Unmatched Theory',
+      classification: 'Human Detective Submission',
+      evidenceAnalyzed: activeEvidence.length,
+      eventsAnalyzed: activeEvents.length,
+      peopleAnalyzed: activePeople.length,
+      inconsistenciesFound: targetCase.inconsistenciesCount || 3,
+      unresolvedQuestions: targetCase.unresolvedCount || 2,
+      confidenceScore: isCorrect ? 100 : 45,
+      summary: `Detective Submission for ${targetCase.title}. User identified suspect "${suspectName}". Outcome: ${isCorrect ? 'Correct Case Solution' : 'Unmatched Theory'}.`,
+      sections: {
+        caseOverview: {
+          title: "1. Human Detective Theory",
+          content: `Suspect Chosen: ${suspectName}\n\nTheory: ${theoryText || 'N/A'}\n\nEvidence Cited: ${evidenceReasoning || 'N/A'}`
+        },
+        evidenceAnalysis: {
+          title: "2. Official Solution Breakdown",
+          items: [
+            { code: "SOLUTION", name: officialCulpritName, assessment: officialSolution?.summary || 'Official finding' }
+          ]
+        },
+        conclusion: {
+          title: "3. Verdict & Explanation",
+          content: officialSolution?.fullExplanation || 'Case review complete.'
+        }
+      }
+    };
+
+    setReportsList(prev => [newReport, ...prev]);
+
+    return result;
+  };
 
   // Simulated Investigation Agent State
   const [investigationStatus, setInvestigationStatus] = useState('idle'); // 'idle' | 'running' | 'completed'
@@ -43,8 +125,8 @@ export const CaseProvider = ({ children }) => {
   }, [activeCaseId]);
 
   const activeReports = useMemo(() => {
-    return mockReports.filter(r => r.caseId === activeCaseId);
-  }, [activeCaseId]);
+    return reportsList.filter(r => r.caseId === activeCaseId);
+  }, [reportsList, activeCaseId]);
 
   const activeGraph = useMemo(() => {
     return mockGraphData[activeCaseId] || mockGraphData['CASE-001'];
@@ -138,7 +220,7 @@ export const CaseProvider = ({ children }) => {
         allEvidence: mockEvidence,
         allPeople: mockPeople,
         allEvents: mockEvents,
-        allReports: mockReports,
+        allReports: reportsList,
         activities: mockActivities,
         isSearchOpen,
         setIsSearchOpen,
@@ -152,6 +234,13 @@ export const CaseProvider = ({ children }) => {
         setSelectedEvent,
         selectedReport,
         setSelectedReport,
+        // Solution & Hint System
+        isSolveModalOpen,
+        setIsSolveModalOpen,
+        hintsUsedMap,
+        incrementHint,
+        userSubmissions,
+        submitCaseSolution,
         // Investigation State
         investigationStatus,
         activeStepIndex,

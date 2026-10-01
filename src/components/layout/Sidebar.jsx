@@ -25,7 +25,7 @@ export const navItems = [
   { path: '/timeline', label: 'Timeline', icon: Clock },
   { path: '/people', label: 'People', icon: Users, badge: '12' },
   { path: '/connections', label: 'Connections', icon: Network },
-  { path: '/investigation', label: 'AI Investigation', icon: Cpu, isSpecial: true },
+  { path: '/investigation', label: 'AI Assistant', icon: Cpu, isSpecial: true },
   { path: '/reports', label: 'Reports', icon: FileText }
 ];
 

@@ -51,14 +51,14 @@ export const Dashboard = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-100 font-sans tracking-tight">
-              Good morning, Investigator
+              Good morning, Detective
             </h1>
             <Badge variant="primary" size="sm" dot>
               Command Center Active
             </Badge>
           </div>
           <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Continue analyzing your active cases, evidence logs, and timeline contradictions.
+            YOU ARE THE DETECTIVE. Analyze evidence, map timelines, consult your AI Assistant, and submit your solution.
           </p>
         </div>
 
@@ -74,10 +74,10 @@ export const Dashboard = () => {
           <Button
             variant="primary"
             size="sm"
-            icon={Cpu}
+            icon={Play}
             onClick={() => handleStartInvestigation('CASE-001')}
           >
-            Launch AI Agent
+            Start Solving
           </Button>
         </div>
       </div>
@@ -122,7 +122,7 @@ export const Dashboard = () => {
         />
       </div>
 
-      {/* Prominent AI Investigation Agent Banner Card */}
+      {/* Prominent AI Investigation Assistant Banner Card */}
       <motion.div
         whileHover={{ scale: 1.005 }}
         transition={{ duration: 0.2 }}
@@ -136,17 +136,17 @@ export const Dashboard = () => {
                 <Sparkles className="w-4 h-4" />
               </span>
               <span className="text-xs font-mono font-bold tracking-wider text-crimson-400 uppercase">
-                AI INVESTIGATION AGENT
+                AI INVESTIGATION ASSISTANT
               </span>
-              <Badge variant="cyan" size="sm">Phase 1 Online</Badge>
+              <Badge variant="cyan" size="sm">Human = Detective • AI = Assistant</Badge>
             </div>
 
             <h3 className="text-xl font-bold text-slate-100 font-sans">
-              Ready to analyze your active case repository.
+              Examine evidence, analyze clues, and solve cases with your AI Assistant.
             </h3>
 
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Analyze multi-source evidence, trace entity relationships, detect timeline inconsistencies, and build exportable forensic audit summaries in seconds.
+              Explore suspect statements, trace timeline inconsistencies, examine digital evidence files, and ask your AI Assistant for guided hints when you get stuck.
             </p>
           </div>
 
@@ -158,7 +158,7 @@ export const Dashboard = () => {
               onClick={() => handleStartInvestigation('CASE-001')}
               className="shadow-[0_0_25px_rgba(225,29,72,0.35)]"
             >
-              Start Investigation
+              Start Solving Case
             </Button>
           </div>
         </div>

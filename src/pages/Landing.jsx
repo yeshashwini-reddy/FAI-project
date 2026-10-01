@@ -50,13 +50,13 @@ export const Landing = () => {
     },
     {
       step: '04',
-      title: 'Analyze with AI Agent',
-      desc: 'Simulate automated contradiction detection and isolate temporal conflicts across sworn witness accounts.'
+      title: 'Consult AI Assistant',
+      desc: 'Ask your AI Assistant for guided evidence explanations, timeline analysis, and progressive hints when stuck.'
     },
     {
       step: '05',
-      title: 'Generate Audit Report',
-      desc: 'Synthesize verified facts, timeline bounds, and unresolved investigative questions into exportable reports.'
+      title: 'Submit Final Solution',
+      desc: 'Form your own theory, select your suspect, and submit your solution to verify your findings against official facts.'
     }
   ];
 
@@ -83,8 +83,8 @@ export const Landing = () => {
     },
     {
       icon: Cpu,
-      title: 'AI Investigation Agent',
-      desc: 'Deterministic multi-step inference pipeline analyzing cross-layer evidentiary clusters and provenance reliability.'
+      title: 'AI Investigation Assistant',
+      desc: 'Smart detective assistant powered by tool functions (searchEvidence, getTimeline, generateHint) to guide the human detective.'
     },
     {
       icon: FileText,
